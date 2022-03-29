@@ -22,17 +22,25 @@ public class Papel extends PiedraPapelTijeraFactory {
 		// TODO Auto-generated method stub
 		int result = 0;
 		switch (pPTF.getNumero()) {
-		case PiedraPapelTijeraFactory.PIEDRA:
-			result = 1;
-			this.descripcionResultado = nombre + " gana a " + pPTF.getNombre();
-			break;
-		case PiedraPapelTijeraFactory.TIJERA:
-			result = -1;
-			this.descripcionResultado = nombre + " pierde con " + pPTF.getNombre();
-			break;		
-		default:
-			this.descripcionResultado = nombre + " empata con " + pPTF.getNombre();
-			break;
+			case PiedraPapelTijeraFactory.PIEDRA:
+				result = 1;
+				this.descripcionResultado = nombre + " gana a " + pPTF.getNombre();
+				break;
+			case PiedraPapelTijeraFactory.SPOCK:
+				result = 2;
+				this.descripcionResultado = nombre + " gana a " + pPTF.getNombre();
+				break;
+			case PiedraPapelTijeraFactory.TIJERA:
+				result = -1;
+				this.descripcionResultado = nombre + " pierde con " + pPTF.getNombre();
+				break;
+			case PiedraPapelTijeraFactory.LAGARTO:
+				result = -2;
+				this.descripcionResultado = nombre + " pierde con " + pPTF.getNombre();
+				break;
+			default:
+				this.descripcionResultado = nombre + " empata con " + pPTF.getNombre();
+				break;
 
 		}
 		return result;

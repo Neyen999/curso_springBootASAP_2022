@@ -6,9 +6,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ar.edu.asap.practica0.modelo.Lagarto;
 import ar.edu.asap.practica0.modelo.Papel;
 import ar.edu.asap.practica0.modelo.Piedra;
 import ar.edu.asap.practica0.modelo.PiedraPapelTijeraFactory;
+import ar.edu.asap.practica0.modelo.Spock;
 import ar.edu.asap.practica0.modelo.Tijera;
 
 class PiedraPapelTijeraFactoryTest {
@@ -17,6 +19,8 @@ class PiedraPapelTijeraFactoryTest {
 	Piedra piedra;
 	Papel papel;
 	Tijera tijera;
+	Lagarto lagarto;
+	Spock spock;
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -24,6 +28,8 @@ class PiedraPapelTijeraFactoryTest {
 		piedra = new Piedra();
 		papel = new Papel();
 		tijera = new Tijera();
+		lagarto = new Lagarto();
+		spock = new Spock();
 	}
 
 	@AfterEach
@@ -32,6 +38,8 @@ class PiedraPapelTijeraFactoryTest {
 		piedra = null;
 		papel = null;
 		tijera = null;
+		lagarto = null;
+		spock = null;
 	}
 	
 	// Test Piedra
@@ -42,8 +50,18 @@ class PiedraPapelTijeraFactoryTest {
 	}
 	
 	@Test
+	void testPiedraGanaALagarto() {
+		assertEquals(2, piedra.comparar(lagarto));
+	}
+	
+	@Test
 	void testPiedraPierdeConPapel() {
 		assertEquals(-1, piedra.comparar(papel));
+	}
+	
+	@Test
+	void testPiedraPierdeConSpock() {
+		assertEquals(-2, piedra.comparar(spock));
 	}
 	
 	@Test
@@ -58,9 +76,21 @@ class PiedraPapelTijeraFactoryTest {
 	}
 	
 	@Test
+	void testPiedraGanaALagarto_DescripcionResultado() {
+		int result = piedra.comparar(lagarto);
+		assertEquals("Piedra gana a Lagarto", piedra.getDescripcionResultado());
+	}
+	
+	@Test
 	void testPiedraPierdeConPapel_DescripcionResultado() {
 		int result = piedra.comparar(papel);
 		assertEquals("Piedra pierde con Papel", piedra.getDescripcionResultado());
+	}
+	
+	@Test
+	void testPiedraPierdeConSpock_DescripcionResultado() {
+		int result = piedra.comparar(spock);
+		assertEquals("Piedra pierde con Spock", piedra.getDescripcionResultado());
 	}
 
 	@Test
@@ -76,10 +106,20 @@ class PiedraPapelTijeraFactoryTest {
 	void testPapelGanaAPiedra() {
 		assertEquals(1, papel.comparar(piedra));
 	}
+
+	@Test 
+	void testPapelGanaASpock() {
+		assertEquals(2, papel.comparar(spock));
+	}
 	
 	@Test
 	void testPapelPierdeConTijera() {
 		assertEquals(-1, papel.comparar(tijera));
+	}
+	
+	@Test
+	void testPapelPierdeConLagarto() {
+		assertEquals(-2, papel.comparar(lagarto));
 	}
 	
 	@Test
@@ -94,9 +134,21 @@ class PiedraPapelTijeraFactoryTest {
 	}
 	
 	@Test
+	void testPapelGanaASpock_DescripcionResultado() {
+		int result = papel.comparar(spock);
+		assertEquals("Papel gana a Spock", papel.getDescripcionResultado());
+	}
+	
+	@Test
 	void testPapelPierdeConTijera_DescripcionResultado() {
 		int result = papel.comparar(tijera);
 		assertEquals("Papel pierde con Tijera", papel.getDescripcionResultado());
+	}
+	
+	@Test
+	void testPapelPierdeConLagarto_DescripcionResultado() {
+		int result = papel.comparar(lagarto);
+		assertEquals("Papel pierde con Lagarto", papel.getDescripcionResultado());
 	}
 
 	@Test
@@ -113,9 +165,19 @@ class PiedraPapelTijeraFactoryTest {
 		assertEquals(1, tijera.comparar(papel));
 	}
 	
+	@Test 
+	void testTijeraGanaALagarto() {
+		assertEquals(2, tijera.comparar(lagarto));
+	}
+	
 	@Test
 	void testTijeraPierdeConPiedra() {
 		assertEquals(-1, tijera.comparar(piedra));
+	}
+	
+	@Test
+	void testTijeraPierdeConSpock() {
+		assertEquals(-2, tijera.comparar(spock));
 	}
 	
 	@Test
@@ -130,15 +192,141 @@ class PiedraPapelTijeraFactoryTest {
 	}
 	
 	@Test
+	void testTijeraGanaALagarto_DescripcionResultado() {
+		int result = tijera.comparar(lagarto);
+		assertEquals("Tijera gana a Lagarto", tijera.getDescripcionResultado());
+	}
+	
+	@Test
 	void testTijeraPierdeConPiedra_DescripcionResultado() {
 		int result = tijera.comparar(piedra);
 		assertEquals("Tijera pierde con Piedra", tijera.getDescripcionResultado());
+	}
+	
+	@Test
+	void testTijeraPierdeConSpock_DescripcionResultado() {
+		int result = tijera.comparar(spock);
+		assertEquals("Tijera pierde con Spock", tijera.getDescripcionResultado());
 	}
 
 	@Test
 	void testTijeraEmpataConTijera_DescripcionResultado() {
 		int result = tijera.comparar(tijera);
 		assertEquals("Tijera empata con Tijera", tijera.getDescripcionResultado());
+	}
+	
+	// Lagarto
+	
+	@Test 
+	void testLagartoGanaASpock() {
+		assertEquals(1, lagarto.comparar(spock));
+	}
+	
+	@Test 
+	void testLagartoGanaAPapel() {
+		assertEquals(2, lagarto.comparar(papel));
+	}
+	
+	@Test
+	void testLagartoPierdeConPiedra() {
+		assertEquals(-1, lagarto.comparar(piedra));
+	}
+	
+	@Test
+	void testLagartoPierdeConTijera() {
+		assertEquals(-2, lagarto.comparar(tijera));
+	}
+	
+	@Test
+	void testLagartoEmpataConLagarto() {
+		assertEquals(0, lagarto.comparar(lagarto));
+	}
+	
+	@Test
+	void testLagartoGanaASpock_DescripcionResultado() {
+		int result = lagarto.comparar(spock);
+		assertEquals("Lagarto gana a Spock", lagarto.getDescripcionResultado());
+	}
+	
+	@Test
+	void testLagartoGanaAPapel_DescripcionResultado() {
+		int result = lagarto.comparar(papel);
+		assertEquals("Lagarto gana a Papel", lagarto.getDescripcionResultado());
+	}
+	
+	@Test
+	void testLagartoPierdeConPiedra_DescripcionResultado() {
+		int result = lagarto.comparar(piedra);
+		assertEquals("Lagarto pierde con Piedra", lagarto.getDescripcionResultado());
+	}
+	
+	@Test
+	void testLagartoPierdeConTijera_DescripcionResultado() {
+		int result = lagarto.comparar(tijera);
+		assertEquals("Lagarto pierde con Tijera", lagarto.getDescripcionResultado());
+	}
+
+	@Test
+	void testLagartoEmpataConLagarto_DescripcionResultado() {
+		int result = lagarto.comparar(lagarto);
+		assertEquals("Lagarto empata con Lagarto", lagarto.getDescripcionResultado());
+	}
+	
+	// Spock
+	
+	@Test 
+	void testSpockGanaATijera() {
+		assertEquals(1, spock.comparar(tijera));
+	}
+	
+	@Test 
+	void testLagartoGanaAPiedra() {
+		assertEquals(2, spock.comparar(piedra));
+	}
+	
+	@Test
+	void testSpockPierdeConLagarto() {
+		assertEquals(-1, lagarto.comparar(piedra));
+	}
+	
+	@Test
+	void testSpockPierdeConPapel() {
+		assertEquals(-2, lagarto.comparar(tijera));
+	}
+	
+	@Test
+	void testSpockEmpataConSpock() {
+		assertEquals(0, spock.comparar(spock));
+	}
+	
+	@Test
+	void testSpockGanaATijera_DescripcionResultado() {
+		int result = spock.comparar(tijera);
+		assertEquals("Spock gana a Tijera", spock.getDescripcionResultado());
+	}
+	
+	@Test
+	void testSpockGanaAPiedra_DescripcionResultado() {
+		int result = spock.comparar(piedra);
+		assertEquals("Spock gana a Piedra", spock.getDescripcionResultado());
+	}
+	
+	@Test
+	void testSpockPierdeConLagarto_DescripcionResultado() {
+		int result = spock.comparar(lagarto);
+		assertEquals("Spock pierde con Lagarto", spock.getDescripcionResultado());
+	}
+	
+	@Test
+	void testSpockPierdeConPapel_DescripcionResultado() {
+		int result = spock.comparar(papel);
+		assertEquals("Spock pierde con Papel", spock.getDescripcionResultado());
+	}
+
+	@Test
+	void testSpockEmpataConSpock_DescripcionResultado() {
+		int result = spock.comparar(spock);
+		assertEquals("Spock empata con Spock", spock.getDescripcionResultado());
 	}
 	
 	// get Instances
@@ -157,4 +345,14 @@ class PiedraPapelTijeraFactoryTest {
 	void testGetInstanceTijera() {
 		assertEquals("Tijera", PiedraPapelTijeraFactory.getInstance(PiedraPapelTijeraFactory.TIJERA).getNombre());
 	}
+	
+	@Test
+	void testGetInstanceLagarto() {
+		assertEquals("Lagarto", PiedraPapelTijeraFactory.getInstance(PiedraPapelTijeraFactory.LAGARTO).getNombre());
+	}
+	
+	void testGetInstanceSpock() {
+		assertEquals("Spock", PiedraPapelTijeraFactory.getInstance(PiedraPapelTijeraFactory.SPOCK).getNombre());
+	}
+	
 }

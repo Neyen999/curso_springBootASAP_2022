@@ -1,21 +1,20 @@
 package ar.edu.asap.practica0.modelo;
 
-public class Piedra extends PiedraPapelTijeraFactory {
+public class Lagarto extends PiedraPapelTijeraFactory {
 
-	public Piedra() {
-		// this hace referencia al constructor del padre
-		this("Piedra", PiedraPapelTijeraFactory.PIEDRA);
+	public Lagarto() {
+		// TODO Auto-generated constructor stub
+		this("Lagarto", PiedraPapelTijeraFactory.LAGARTO);
 	}
 	
-	public Piedra(String nombre, int numero) {
+	public Lagarto(String nombre, int numero) {
 		super(nombre, numero);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public boolean itsMe(int pNum) {
 		// TODO Auto-generated method stub
-		return pNum == PiedraPapelTijeraFactory.PIEDRA;
+		return pNum == PiedraPapelTijeraFactory.LAGARTO;
 	}
 
 	@Override
@@ -24,29 +23,28 @@ public class Piedra extends PiedraPapelTijeraFactory {
 		int result = 0;
 		
 		switch (pPTF.getNumero()) {
-			case PiedraPapelTijeraFactory.TIJERA:
+			case PiedraPapelTijeraFactory.SPOCK:
 				result = 1;
 				this.descripcionResultado = nombre + " gana a " + pPTF.getNombre();
 				break;
-			case PiedraPapelTijeraFactory.LAGARTO:
+			case PiedraPapelTijeraFactory.PAPEL:
 				result = 2;
 				this.descripcionResultado = nombre + " gana a " + pPTF.getNombre();
 				break;
-			case PiedraPapelTijeraFactory.PAPEL:
+			case (PiedraPapelTijeraFactory.PIEDRA):
 				result = -1;
 				this.descripcionResultado = nombre + " pierde con " + pPTF.getNombre();
-				break;
-			case PiedraPapelTijeraFactory.SPOCK:
+				break;	
+			case (PiedraPapelTijeraFactory.TIJERA):
 				result = -2;
 				this.descripcionResultado = nombre + " pierde con " + pPTF.getNombre();
-				break;
+				break;	
 			default:
 				this.descripcionResultado = nombre + " empata con " + pPTF.getNombre();
 				break;
 		}	
 		
 		return result;
-
 	}
 
 }
