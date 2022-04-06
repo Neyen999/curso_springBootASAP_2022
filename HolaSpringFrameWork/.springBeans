@@ -8,6 +8,9 @@
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
 		<config>src/main/webapp/WEB-INF/springconfig/dispatcherServletContext.xml</config>
+		<config>src/main/resources/META-INF/juego/Jugador.xml</config>
+		<config>src/main/resources/META-INF/juego/jugada.xml</config>
+		<config>src/main/resources/META-INF/juego/Jugador2.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+<import resource="Jugador.xml" />
+<import resource="Jugador2.xml" />
+
+	<bean id="jugada" class="ar.edu.asap.practica0.modelo.Jugada">
+		<property name="codigo">
+			<value>1</value>
+		</property>
+		
+		<property name="fechaHora">
+			<bean factory-bean="dateFormat" factory-method="parse">
+				<constructor-arg value="2010-01-31" />
+			</bean>
+		</property>
+		
+		<property name="jugador1">
+			<ref bean="jg1" />
+		</property>
+		
+		<property name="jugador2">
+			<ref bean="jg2" />
+		</property>
+	</bean>
+	<bean id="dateFormat" class="java.text.SimpleDateFormat">
+			<constructor-arg value="yyyy-MM-dd" />
+	</bean>
+</beans>
