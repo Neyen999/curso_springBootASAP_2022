@@ -18,9 +18,9 @@ public class Alumno implements Modal, Vaciable {
 	
 	
 	
-	public Alumno(String email) {
+	public Alumno(int codigo) {
 		super();
-		this.email = email;
+		this.codigo = codigo;
 	}
 
 

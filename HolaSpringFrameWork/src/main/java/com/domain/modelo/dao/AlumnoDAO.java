@@ -2,7 +2,9 @@ package com.domain.modelo.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,23 +65,43 @@ public class AlumnoDAO implements DAO {
 	}
 
 	@Override
-	public List<Modal> leer(Modal pModal) throws SQLException {
-		/*
-		StringBuilder sql = new StringBuilder("select ALU_APELLIDO from alumnos where ALU_NOMBRE=?");
-		Alumno alu = (Alumno) pModal;
+	public List<Modal> leer(Modal pModal) throws SQLException {		
+		//StringBuilder sql = new StringBuilder("select ALU_NOMBRE from alumnos");
+		Statement stmt = conexion.createStatement();
+		ResultSet rs = stmt.executeQuery("select ALU_ID, ALU_NOMBRE, ALU_APELLIDO, ALU_EMAIL, ALU_CONOCIMIENTOS, ALU_GIT from alumnos");
 		
-		List<Modal> lista = new ArrayList();
+		List<Modal> listado = new ArrayList();
 		
-		PreparedStatement stm = conexion.prepareStatement(sql.toString());
-		//stm.setString(1, alu.getApellido());
-		stm.setString(1, alu.getNombre());
+		while(rs.next()) {
+			Alumno alumno = new Alumno();
+			alumno.setCodigo(rs.getInt("ALU_ID"));
+			alumno.setNombre(rs.getString("ALU_NOMBRE"));
+			alumno.setApellido(rs.getString("ALU_APELLIDO"));
+			alumno.setEmail(rs.getString("ALU_EMAIL"));
+			alumno.setEstudios(rs.getString("ALU_CONOCIMIENTOS"));
+			alumno.setLinkARepositorio(rs.getString("ALU_GIT"));
+			listado.add(alumno);
+		}
 		
-		stm.execute();
 		
-		lista.add(new Alumno(alu.getEmail()));
+		for (Modal obj : listado) {
+	         System.out.print("Codigo: "+ ((Alumno) obj).getCodigo()+", ");
+	         System.out.print("Nombre: "+ ((Alumno) obj).getNombre()+", ");
+	         System.out.print("Apellido: "+ ((Alumno) obj).getApellido()+", ");
+	         System.out.print("Email: "+ ((Alumno) obj).getEmail()+", ");
+	         System.out.print("Estudios: "+ ((Alumno) obj).getEstudios()+", ");
+	         System.out.print("Repositorio: "+ ((Alumno) obj).getLinkARepositorio());
+	         System.out.println();
+	     }
 		
-		return lista;*/
-		return null;
+		try {
+			rs.close();
+			stmt.close();
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return listado;
 		
 	}
 

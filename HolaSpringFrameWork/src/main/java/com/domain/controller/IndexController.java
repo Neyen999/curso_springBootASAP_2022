@@ -1,5 +1,6 @@
 package com.domain.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.domain.modelo.Alumno;
+import com.domain.modelo.Modal;
+import com.domain.modelo.dao.AlumnoDAO;
+import com.domain.modelo.dao.DAO;
 
 import ar.edu.asap.practica0.modelo.Lagarto;
 import ar.edu.asap.practica0.modelo.Papel;
@@ -29,12 +35,24 @@ public class IndexController {
 		return "Presentacion";
 	}
 	
-	@RequestMapping("listado")
-	public String goListadoAlumnos(Model model) {
+	@RequestMapping("/listado")
+	public String goListadoAlumnos(Model model) throws ClassNotFoundException, SQLException {
+		/*
 		List<String> alumnos = new ArrayList<String>();
 		alumnos.add("Juan");
 		alumnos.add("Pedro");
 		alumnos.add("José");
+		*/
+		
+		List<com.domain.modelo.Modal> alumnos=null ;
+		DAO aluDao = new AlumnoDAO();
+		try {
+			alumnos= aluDao.leer(null);
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+
+		System.out.println(alumnos);
 		
 		model.addAttribute("titulo", "Listado de alumnos");
 		model.addAttribute("profesor", "Gabriel Casas");
