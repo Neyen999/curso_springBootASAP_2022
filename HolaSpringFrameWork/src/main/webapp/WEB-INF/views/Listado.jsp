@@ -13,7 +13,7 @@
 
 <title>${titulo}</title>
 </head>
-<body>
+<body class="container">
 	<h1>PROFESOR ${profesor}</h1>
 	<ul>
 		<table class="table table-bordered">

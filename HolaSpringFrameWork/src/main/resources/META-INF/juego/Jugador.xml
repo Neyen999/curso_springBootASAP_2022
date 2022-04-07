@@ -16,8 +16,9 @@
 			<value>papacho</value>
 		</property>
 		<property name="jugadaElegida">
-			
+			<ref bean="piedra"/>
 		</property>
 	</bean>
+	<bean id="piedra" class="ar.edu.asap.practica0.modelo.Piedra"></bean>
 
 </beans>

@@ -73,7 +73,8 @@ public class AlumnoDAO implements DAO {
 		List<Modal> listado = new ArrayList();
 		
 		while(rs.next()) {
-			Alumno alumno = new Alumno();
+			Alumno alumno = (Alumno) pModal;
+			alumno = new Alumno();
 			alumno.setCodigo(rs.getInt("ALU_ID"));
 			alumno.setNombre(rs.getString("ALU_NOMBRE"));
 			alumno.setApellido(rs.getString("ALU_APELLIDO"));

@@ -7,6 +7,8 @@ public class Auditoria {
 	private Date fecha;
 	private int cantidadDeJugadas;
 	
+	public Auditoria() {}
+	
 	public Auditoria(Date fecha, int jugadas) {
 		this.fecha = fecha;
 		this.cantidadDeJugadas = jugadas;
@@ -28,6 +30,8 @@ public class Auditoria {
 		this.cantidadDeJugadas = cantidadDeJugadas;
 	}
 
-	public void contarDespuesDeLaJugada() {}
+	public void contarDespuesDeLaJugada() {
+		cantidadDeJugadas++;
+	}
 	
 }
