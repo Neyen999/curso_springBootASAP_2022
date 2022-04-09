@@ -15,8 +15,7 @@
 </head>
 <body class="container">
 	<h1>PROFESOR ${profesor}</h1>
-	<ul>
-		<table class="table table-bordered">
+	<table class="table table-bordered">
 	<tr>
 	<th>codigo</th><th>nombre</th><th>apellido</th><th>repositorio</th>
 	</tr>
@@ -29,7 +28,5 @@
 			</tr>
 		</c:forEach>
 	</table>
-		
-	</ul>
 </body>
 </html>

@@ -7,8 +7,8 @@ import com.domain.modelo.Modal;
 
 public interface DAO {
 	public void agregar(Modal pModal) throws ClassNotFoundException, SQLException;
-	public void modificar(Modal pModal) throws SQLException;
-	public void eliminar(Modal pModal) throws SQLException;
-	public List<Modal> leer(Modal pModal) throws SQLException;
+	public void modificar(Modal pModal) throws SQLException, ClassNotFoundException;
+	public void eliminar(Modal pModal) throws SQLException, ClassNotFoundException;
+	public List<Modal> leer(Modal pModal) throws SQLException, ClassNotFoundException;
 
 }

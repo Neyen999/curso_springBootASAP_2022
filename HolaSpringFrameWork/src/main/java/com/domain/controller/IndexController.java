@@ -37,13 +37,7 @@ public class IndexController {
 	
 	@RequestMapping("/listado")
 	public String goListadoAlumnos(Model model) throws ClassNotFoundException, SQLException {
-		/*
-		List<String> alumnos = new ArrayList<String>();
-		alumnos.add("Juan");
-		alumnos.add("Pedro");
-		alumnos.add("José");
-		*/
-		
+
 		List<com.domain.modelo.Modal> alumnos=null ;
 		DAO aluDao = new AlumnoDAO();
 		try {

@@ -16,15 +16,13 @@ public class AlumnoDAO implements DAO {
 
 	private Connection conexion;
 	
-	public AlumnoDAO() throws ClassNotFoundException, SQLException {
-
-		ConectionManager.conectar();
-		
-		conexion = ConectionManager.getConection();
-	}
+	public AlumnoDAO() throws ClassNotFoundException, SQLException {}
 	
 	@Override
 	public void agregar(Modal pModal) throws ClassNotFoundException, SQLException {
+		ConectionManager.conectar();
+		conexion = ConectionManager.getConection();
+		
 		StringBuilder sql = new StringBuilder("insert into alumnos (ALU_APELLIDO, ALU_NOMBRE, ALU_EMAIL, ALU_CONOCIMIENTOS, ALU_GIT) values(?,?,?,?,?)");
 		
 		Alumno alu = (Alumno) pModal;
@@ -37,54 +35,88 @@ public class AlumnoDAO implements DAO {
 		stm.setString(5, alu.getLinkARepositorio());
 		
 		stm.execute();
+		
+		ConectionManager.desConectar();
 	}
 
 	@Override
-	public void modificar(Modal pModal) throws SQLException {
-		StringBuilder sql = new StringBuilder("update alumnos set ALU_EMAIL=? where ALU_CONOCIMIENTOS=?");
+	public void modificar(Modal pModal) throws SQLException, ClassNotFoundException {
+		ConectionManager.conectar();
+		conexion = ConectionManager.getConection();
 		
-		Alumno alu = (Alumno) pModal;
-		
-		PreparedStatement stm = conexion.prepareStatement(sql.toString());
-		stm.setString(2, alu.getEstudios());
-		stm.setString(1, alu.getEmail());
-		stm.execute();
-		
-	}
-
-	@Override
-	public void eliminar(Modal pModal) throws SQLException {
-		StringBuilder sql = new StringBuilder("delete from alumnos where ALU_NOMBRE=?");
-		
+		StringBuilder sql = new StringBuilder("UPDATE alumnos SET ALU_NOMBRE=?");
+					  sql.append(", ALU_APELLIDO=?");
+					  sql.append(", ALU_EMAIL=?");
+					  sql.append(", ALU_CONOCIMIENTOS=?");
+					  sql.append(", ALU_GIT=? ");
+					  sql.append("WHERE ALU_ID=?");
 		Alumno alu = (Alumno) pModal;
 		
 		PreparedStatement stm = conexion.prepareStatement(sql.toString());
 		stm.setString(1, alu.getNombre());
+		stm.setString(2, alu.getApellido());
+		stm.setString(3, alu.getEmail());
+		stm.setString(4, alu.getEstudios());
+		stm.setString(5, alu.getLinkARepositorio());
+		stm.setInt(6, alu.getCodigo());
 		stm.execute();
+		
+		ConectionManager.desConectar();
 		
 	}
 
 	@Override
-	public List<Modal> leer(Modal pModal) throws SQLException {		
-		//StringBuilder sql = new StringBuilder("select ALU_NOMBRE from alumnos");
-		Statement stmt = conexion.createStatement();
-		ResultSet rs = stmt.executeQuery("select ALU_ID, ALU_NOMBRE, ALU_APELLIDO, ALU_EMAIL, ALU_CONOCIMIENTOS, ALU_GIT from alumnos");
+	public void eliminar(Modal pModal) throws SQLException, ClassNotFoundException {
+		ConectionManager.conectar();
+		conexion = ConectionManager.getConection();
+		
+		StringBuilder sql = new StringBuilder("DELETE FROM alumnos WHERE ALU_ID=?");
+
+		Alumno alu = (Alumno) pModal;
+		PreparedStatement stm = conexion.prepareStatement(sql.toString());
+		 stm.setInt(1, alu.getCodigo());
+		 stm.execute();
+		  
+		ConectionManager.desConectar();
+	}
+
+	@Override
+	public List<Modal> leer(Modal pModal) throws SQLException, ClassNotFoundException {
+		ConectionManager.conectar();
+		conexion = ConectionManager.getConection();
+
+		StringBuilder sql = new StringBuilder("SELECT ALU_ID, ALU_NOMBRE, ALU_APELLIDO, ALU_EMAIL, ALU_CONOCIMIENTOS, ALU_GIT from alumnos ");
+		
 		
 		List<Modal> listado = new ArrayList();
 		
+		PreparedStatement stm = null;
+		
+		Alumno alumno = (Alumno) pModal;
+		if(alumno != null && !alumno.isEmpty()) {
+			if(alumno.getCodigo() > 0) {
+				sql.append("WHERE ALU_ID=?");
+				stm = conexion.prepareStatement(sql.toString());
+				stm.setInt(1, alumno.getCodigo());
+			} else if (alumno.getNombre() != null && !alumno.getNombre().isEmpty()) {
+				sql.append("WHERE ALU_NOMBRE=?");
+				stm = conexion.prepareStatement(sql.toString());
+				stm.setString(1, alumno.getNombre());
+			}
+		} else {
+			stm = conexion.prepareStatement(sql.toString());
+		}
+		
+		ResultSet rs = stm.executeQuery();
+		
 		while(rs.next()) {
-			Alumno alumno = (Alumno) pModal;
-			alumno = new Alumno();
-			alumno.setCodigo(rs.getInt("ALU_ID"));
-			alumno.setNombre(rs.getString("ALU_NOMBRE"));
-			alumno.setApellido(rs.getString("ALU_APELLIDO"));
-			alumno.setEmail(rs.getString("ALU_EMAIL"));
-			alumno.setEstudios(rs.getString("ALU_CONOCIMIENTOS"));
-			alumno.setLinkARepositorio(rs.getString("ALU_GIT"));
+			alumno = new Alumno(rs.getInt("ALU_ID"), rs.getString("ALU_NOMBRE"), 
+					rs.getString("ALU_APELLIDO"), rs.getString("ALU_EMAIL"), 
+					rs.getString("ALU_CONOCIMIENTOS"), rs.getString("ALU_GIT"));
 			listado.add(alumno);
 		}
 		
-		
+		/*
 		for (Modal obj : listado) {
 	         System.out.print("Codigo: "+ ((Alumno) obj).getCodigo()+", ");
 	         System.out.print("Nombre: "+ ((Alumno) obj).getNombre()+", ");
@@ -93,14 +125,16 @@ public class AlumnoDAO implements DAO {
 	         System.out.print("Estudios: "+ ((Alumno) obj).getEstudios()+", ");
 	         System.out.print("Repositorio: "+ ((Alumno) obj).getLinkARepositorio());
 	         System.out.println();
-	     }
+	     }*/
 		
 		try {
 			rs.close();
-			stmt.close();
+			stm.close();
 		} catch(SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		
+		ConectionManager.desConectar();
 		
 		return listado;
 		
