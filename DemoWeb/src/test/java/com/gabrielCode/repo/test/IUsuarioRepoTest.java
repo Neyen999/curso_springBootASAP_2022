@@ -1,4 +1,4 @@
-package com.gabrielCode.model.test;
+package com.gabrielCode.repo.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,17 +14,16 @@ import com.gabrielCode.repo.IUsuarioRepo;
 
 @SpringBootTest
 class IUsuarioRepoTest {
-	
+
 	@Autowired
-	IUsuarioRepo usuRepo;
+	private IUsuarioRepo usuRepo;
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
-
 	@Test
 	void testAgregar() {
-		Usuario usu = new Usuario(0, "Gabriel", encoder.encode("gCasas"));
+		Usuario usu = new Usuario(0, "Gabriel", encoder.encode("gcasas"));
 		Usuario usuRetorno = usuRepo.save(usu);
 		assertEquals(usu.getClave(), usuRetorno.getClave());
 	}

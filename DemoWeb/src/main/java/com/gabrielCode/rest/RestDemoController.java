@@ -29,13 +29,13 @@ public class RestDemoController {
 	
 	@PostMapping()
 	public void insertar(@RequestBody Persona per) {
-		 Persona persona = new Persona(per.getCodigo(), per.getNombre());
-		repo.save(persona);
+		 //Persona persona = new Persona(per.getCodigo(), per.getNombre());
+		System.out.println("codigo" + per.getCodigo() + ",nombre=" + per.getNombre());
+		repo.save(per);
 		
 	}
 	
-	@PutMapping(path = "/{id}")
-	public void modificar(@PathVariable(value = "id") Integer id, @RequestBody Persona per) {
+	/*public void modificar(@PathVariable(value = "id") Integer id, @RequestBody Persona per) {
 		Optional<Persona> persona = repo.findById(id);
 		if(!persona.isPresent()) {
 			System.out.println("No hay persona");
@@ -46,7 +46,13 @@ public class RestDemoController {
 		newPersona.setNombre(per.getNombre());
 		repo.save(newPersona);
 		}
+	}*/
+	@PutMapping(path = "/{id}")
+	public void modificar(@RequestBody Persona per) {
+		System.out.println("codigo" + per.getCodigo() + ",nombre=" + per.getNombre());
+		repo.save(per);
 	}
+
 
 	@DeleteMapping(value = "/{id}")
 	public void eliminar(@PathVariable("id") Integer id) {

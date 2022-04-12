@@ -11,30 +11,28 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.gabrielCode.model.Usuario;
 import com.gabrielCode.repo.IUsuarioRepo;
 
-public class UserService implements UserDetailsService {
-	
+@Service
+public class UserService implements UserDetailsService{
 	@Autowired
 	private IUsuarioRepo repo;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
-
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario us = repo.findByNombre(username);
+		Usuario us= repo.findByNombre(username);
 		
 		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 		roles.add(new SimpleGrantedAuthority("admin"));
 		
-		UserDetails userDetail = new User(us.getNombre(), us.getClave(), roles);
-		
+		UserDetails userDetail = new User(us.getNombre(),us.getClave(), roles);
 		
 		return userDetail;
 	}
-	
-
 }

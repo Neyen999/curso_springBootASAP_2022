@@ -1,9 +1,9 @@
 package com.baeldung.boot.jsp;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.SpringBootConfiguration;
 
-@SpringBootApplication
+@SpringBootConfiguration
 public class SpringBootJspApplication {
 
 	public static void main(String[] args) {
