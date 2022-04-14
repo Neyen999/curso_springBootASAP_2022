@@ -7,7 +7,6 @@
 
 	<import resource="Jugador.xml" />
 	<import resource="Jugador2.xml" />
-	<!-- Creamos la jugada -->
 	
 	<bean id="jugada" class="ar.edu.asap.practica0.modelo.Jugada">
 		<property name="codigo">
