@@ -35,18 +35,6 @@ public class RestDemoController {
 		
 	}
 	
-	/*public void modificar(@PathVariable(value = "id") Integer id, @RequestBody Persona per) {
-		Optional<Persona> persona = repo.findById(id);
-		if(!persona.isPresent()) {
-			System.out.println("No hay persona");
-		}
-		else {
-			
-		Persona newPersona = persona.get();
-		newPersona.setNombre(per.getNombre());
-		repo.save(newPersona);
-		}
-	}*/
 	@PutMapping(path = "/{id}")
 	public void modificar(@RequestBody Persona per) {
 		System.out.println("codigo" + per.getCodigo() + ",nombre=" + per.getNombre());
